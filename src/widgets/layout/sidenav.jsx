@@ -51,17 +51,17 @@ export function Sidenav({ brandImg, brandName, routes }) {
             <div className="relative text-center py-6 px-8">
                 {brandImg && (
                     <img
-                        src="/img/TangkApp_logo_only.png"
+                        src="/img/Logo Stroke.png"
                         alt="Brand Logo"
-                        className="mx-auto h-16 w-auto object-contain"
+                        className="mx-auto h-20 w-auto object-contain"
                     />
                 )}
-                <Typography
+                {/* <Typography
                     variant="h6"
                     color={sidenavType === 'dark' ? 'white' : 'blue-gray'}
                 >
                     {brandName}
-                </Typography>
+                </Typography> */}
             </div>
 
             <div className="m-4">

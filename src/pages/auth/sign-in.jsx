@@ -150,7 +150,7 @@ export function SignIn() {
             </div>
             <div className="w-2/5 h-full hidden lg:block">
                 <img
-                    src="/img/TangkApp_logo_pattern.png"
+                    src="/img/BG Logo 2-04.png"
                     alt="Login Illustration"
                     className="h-full w-full object-cover rounded-3xl"
                 />
