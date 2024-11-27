@@ -117,7 +117,7 @@ const PopUpUpdateBerkas = ({ data, onClose, onUpdateSuccess }) => {
                 noBerkas: formData.noBerkas.toString(),
             })
             const response = await axios.put(
-                `berkas/update/${formData.idBerkas}`,
+                `berkas/update/${formData._id}`,
                 formData
             )
             if (response.status === 200) {
@@ -381,7 +381,7 @@ const PopUpUpdateBerkas = ({ data, onClose, onUpdateSuccess }) => {
                         <Select
                             className="w-full"
                             options={dropdownData.petugasSPS.map((item) => ({
-                                label: item.namaPetugas,
+                                label: item.nama,
                                 value: item._id,
                             }))}
                             value={{
@@ -395,7 +395,7 @@ const PopUpUpdateBerkas = ({ data, onClose, onUpdateSuccess }) => {
                                 setFormData({
                                     ...formData,
                                     idPetugasSPS: item?._id || '',
-                                    namaPetugasSPS: item?.namaPetugas || '',
+                                    namaPetugasSPS: item?.nama || '',
                                 })
                             }}
                         />

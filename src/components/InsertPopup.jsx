@@ -676,7 +676,7 @@ const PopUpInsertBerkas = ({ onClose, onInsertSuccess }) => {
                         </Typography>
                         <Select
                             options={dropdownData.petugasSPS.map((item) => ({
-                                label: item.namaPetugas,
+                                label: item.nama,
                                 value: item._id,
                             }))}
                             placeholder="Pilih Petugas SPS"
@@ -687,7 +687,7 @@ const PopUpInsertBerkas = ({ onClose, onInsertSuccess }) => {
                                 setFormData({
                                     ...formData,
                                     idPetugasSPS: item?._id || '',
-                                    namaPetugasSPS: item?.namaPetugas || '',
+                                    namaPetugasSPS: item?.nama || '',
                                 })
                             }}
                             className={`w-full ${
