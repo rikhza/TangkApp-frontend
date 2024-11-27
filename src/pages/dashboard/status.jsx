@@ -13,7 +13,6 @@ import PopUpInsertStatus from '@/components/status/InsertStatus'
 import PopUpUpdateStatus from '@/components/status/UpdateStatus'
 import { useMaterialTailwindController } from '@/context'
 import { Navigate } from 'react-router-dom'
-import PopUpInsertBerkas from '@/components/InsertPopup'
 
 export function Status() {
     const [statusData, setStatusData] = useState([])
