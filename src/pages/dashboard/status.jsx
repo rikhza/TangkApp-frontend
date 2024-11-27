@@ -9,8 +9,8 @@ import {
 } from '@material-tailwind/react'
 import { PencilIcon, TrashIcon, PlusIcon } from '@heroicons/react/24/outline'
 import axios from '../../api/apiTangkApp'
-import PopUpInsertStatus from '@/components/status/InsertStatus'
-import PopUpUpdateStatus from '@/components/status/UpdateStatus'
+import PopUpInsertStatus from '../../components/status/InsertStatus'
+import PopUpUpdateStatus from '../../components/status/updateStatus'
 import { useMaterialTailwindController } from '@/context'
 import { Navigate } from 'react-router-dom'
 
