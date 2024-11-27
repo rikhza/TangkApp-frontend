@@ -68,7 +68,7 @@ const DetailModal = ({
 
         if (printWindow) {
             printWindow.document.write(
-                `<html><head><title>https://tangkapp.netlify.app/dashboard/berkas/${berkas._id}</title></head><body>`
+                `<html><head><title>https://tangkapp.id/dashboard/berkas/${berkas._id}</title></head><body>`
             )
             printWindow.document.write('<div style="text-align:center;">')
             printWindow.document.write(qrCodeRef.current.innerHTML)

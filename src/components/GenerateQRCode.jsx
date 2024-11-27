@@ -5,7 +5,7 @@ const GenerateQRCode = ({ id }) => {
       <div>
           <h1>Kode QR Berkas</h1>
           <QRCode
-              value={`https://tangkapp.netlify.app/dashboard/berkas/${id}`}
+              value={`https://tangkapp.id/dashboard/berkas/${id}`}
               size={256}
           />
       </div>
