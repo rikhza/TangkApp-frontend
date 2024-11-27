@@ -64,7 +64,7 @@ export function Status() {
             <Card>
                 <CardHeader
                     variant="gradient"
-                    color="blue"
+                    color="grey"
                     className="mb-8 p-6 flex justify-between items-center"
                 >
                     <Typography variant="h6" color="white">
@@ -72,7 +72,7 @@ export function Status() {
                     </Typography>
                     <Button
                         variant="gradient"
-                        color="green"
+                        color="blue"
                         onClick={() => setShowInsertPopup(true)}
                         className="flex items-center gap-2"
                     >
