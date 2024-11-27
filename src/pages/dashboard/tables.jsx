@@ -173,7 +173,6 @@ export function Tables() {
                             variant="gradient"
                             color="yellow"
                             size="sm"
-                            disabled={loadingUpdate}
                             onClick={() => {
                                 setSelectedBerkas(berkas)
                                 setShowUpdatePopup(true)

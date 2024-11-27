@@ -1,0 +1,165 @@
+import React, { useState, useEffect } from 'react'
+import {
+    Dialog,
+    DialogHeader,
+    DialogBody,
+    DialogFooter,
+    Input,
+    Button,
+} from '@material-tailwind/react'
+import axios from '../../api/apiTangkApp'
+import { useMaterialTailwindController } from '@/context'
+import Select from 'react-select' // Import react-select
+
+const PopUpInsertRole = ({ onClose, onInsertSuccess }) => {
+    const [formData, setFormData] = useState({
+        nama: '',
+        accessStatus: [], // Array to hold selected access status IDs
+    })
+    const [errors, setErrors] = useState({})
+    const [loading, setLoading] = useState(false)
+    const [statusData, setStatusData] = useState([]) // State to store status data
+    const [controller] = useMaterialTailwindController()
+    const { token } = controller
+
+    useEffect(() => {
+        fetchStatus() // Fetch status when the component mounts
+    }, [])
+
+    const fetchStatus = async () => {
+        try {
+            const response = await axios.get('status', {
+                headers: { Authorization: `Bearer ${token}` },
+            })
+            setStatusData(response.data || []) // Store status data
+        } catch (error) {
+            console.error('Failed to fetch status:', error)
+            alert('Failed to fetch status data from the server.')
+        }
+    }
+
+    const validateForm = () => {
+        const newErrors = {}
+        if (!formData.nama.trim()) newErrors.nama = 'Role name cannot be empty'
+        if (formData.accessStatus.length === 0)
+            newErrors.accessStatus = 'At least one access status is required'
+        setErrors(newErrors)
+        return Object.keys(newErrors).length === 0
+    }
+
+    const handleInsert = async () => {
+        if (!validateForm()) return
+
+        setLoading(true)
+        try {
+            // Before submitting, map the accessStatus IDs to full status objects
+            const updatedAccessStatus = formData.accessStatus.map((id) => {
+                return statusData.find((status) => status._id === id) // Find full status by _id
+            })
+
+            // Update formData with the full accessStatus objects
+            const dataToSubmit = {
+                ...formData,
+                accessStatus: updatedAccessStatus,
+            }
+
+            // Send the updated data to the API
+            const response = await axios.post('roles', dataToSubmit, {
+                headers: { Authorization: `Bearer ${token}` },
+            })
+
+            // Ensure successful response
+            if (response.status === 201) {
+                onInsertSuccess(response.data)
+            } else {
+                alert(`Failed to add role: ${response.statusText}`)
+            }
+        } catch (error) {
+            // Handle error
+            if (error.response) {
+                console.error('Error Response:', error.response.data)
+                alert(
+                    `Failed to add role: ${
+                        error.response.data.message || error.response.status
+                    }`
+                )
+            } else {
+                console.error('Error Message:', error.message)
+                alert(
+                    'Failed to add role. There was a network or server issue.'
+                )
+            }
+        } finally {
+            setLoading(false)
+        }
+    }
+
+    return (
+        <Dialog open={true} handler={onClose}>
+            <DialogHeader>Tambah Role</DialogHeader>
+            <DialogBody style={{ display: 'grid', gap: '10px' }}>
+                <Input
+                    label="Role Name"
+                    value={formData.nama}
+                    onChange={(e) =>
+                        setFormData({
+                            ...formData,
+                            nama: e.target.value.toUpperCase(),
+                        })
+                    }
+                    style={{
+                        borderColor: errors.nama ? 'red' : undefined,
+                    }}
+                />
+                {errors.nama && (
+                    <span style={{ color: 'red', fontSize: '12px' }}>
+                        {errors.nama}
+                    </span>
+                )}
+
+                {/* Select Multiple Access Status */}
+                <Select
+                    isMulti
+                    name="accessStatus"
+                    options={statusData.map((status) => ({
+                        value: status._id, // Using _id as value
+                        label: status.nama, // Using nama as label
+                    }))} // Map status data to options
+                    value={formData.accessStatus.map((id) => ({
+                        value: id,
+                        label:
+                            statusData.find((status) => status._id === id)
+                                ?.nama || '',
+                    }))}
+                    onChange={(selected) =>
+                        setFormData({
+                            ...formData,
+                            accessStatus: selected.map((item) => item.value), // Store only the selected ids
+                        })
+                    }
+                    placeholder="Select Access Status"
+                    isSearchable
+                />
+                {errors.accessStatus && (
+                    <span style={{ color: 'red', fontSize: '12px' }}>
+                        {errors.accessStatus}
+                    </span>
+                )}
+            </DialogBody>
+            <DialogFooter>
+                <Button variant="text" onClick={onClose}>
+                    Cancel
+                </Button>
+                <Button
+                    variant="gradient"
+                    onClick={handleInsert}
+                    disabled={loading}
+                >
+                    {loading ? 'Loading...' : 'Add Role'}
+                </Button>
+            </DialogFooter>
+        </Dialog>
+    )
+}
+
+export default PopUpInsertRole

@@ -6,6 +6,10 @@ import {
     ServerStackIcon,
     RectangleStackIcon,
     CameraIcon,
+    DocumentIcon,
+    CpuChipIcon,
+    PlayPauseIcon,
+    CheckIcon,
 } from '@heroicons/react/24/solid'
 import {
     Home,
@@ -18,6 +22,8 @@ import {
 import { SignIn, SignUp } from '@/pages/auth'
 import ScanQR from './pages/dashboard/scanQR'
 import DetailBerkas from './pages/dashboard/detailBerkas'
+import Status from './pages/dashboard/status'
+import { Roles } from './pages/dashboard/roles'
 
 const icon = {
     className: 'w-5 h-5 text-inherit',
@@ -41,7 +47,7 @@ export const routes = [
                 mobileOnly: true,
             },
             {
-                icon: <TableCellsIcon {...icon} />,
+                icon: <DocumentIcon {...icon} />,
                 name: 'Berkas Saya',
                 path: '/berkas',
                 element: <Tables />,
@@ -65,6 +71,20 @@ export const routes = [
                 name: 'Users',
                 path: '/users',
                 element: <Users />,
+                role: 'Admin',
+            },
+            {
+                icon: <PlayPauseIcon {...icon} />,
+                name: 'Status',
+                path: '/status',
+                element: <Status />,
+                role: 'Admin',
+            },
+            {
+                icon: <CheckIcon {...icon} />,
+                name: 'Roles',
+                path: '/roles',
+                element: <Roles />,
                 role: 'Admin',
             },
             {

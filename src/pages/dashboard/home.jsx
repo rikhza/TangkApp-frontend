@@ -75,11 +75,11 @@ export function Home() {
                             value: terhenti,
                             icon: DocumentIcon,
                         },
-                        {
-                            title: 'Berkas Selesai',
-                            value: selesai,
-                            icon: DocumentIcon,
-                        },
+                        // {
+                        //     title: 'Berkas Selesai',
+                        //     value: selesai,
+                        //     icon: DocumentIcon,
+                        // },
                     ]
                     setCountAlert(alertSystem)
                     setBerkasBerjalan(berkasBerjalanResponse)
@@ -107,7 +107,7 @@ export function Home() {
                     </Alert>
                 )}
             </div>
-            <div className="mb-12 grid gap-y-10 gap-x-6 md:grid-cols-3 xl:grid-cols-3">
+            <div className="mb-12 grid gap-y-10 gap-x-6 md:grid-cols-2 xl:grid-cols-2">
                 {loading ? (
                     <div>Loading...</div>
                 ) : (
