@@ -58,7 +58,7 @@ export function Tables() {
 
         if (printWindow) {
             printWindow.document.write(
-                `<html><head><title>https://tangkapp.netlify.app/dashboard/berkas/${berkas._id}</title></head><body>`
+                `<html><head><title>https://tangkapp.id/dashboard/berkas/${berkas._id}</title></head><body>`
             )
             printWindow.document.write(content)
             printWindow.document.write(
