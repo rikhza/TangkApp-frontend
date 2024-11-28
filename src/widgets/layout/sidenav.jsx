@@ -56,12 +56,6 @@ export function Sidenav({ brandImg, brandName, routes }) {
                         className="mx-auto h-20 w-auto object-contain"
                     />
                 )}
-                {/* <Typography
-                    variant="h6"
-                    color={sidenavType === 'dark' ? 'white' : 'blue-gray'}
-                >
-                    {brandName}
-                </Typography> */}
             </div>
 
             <div className="m-4">
@@ -119,47 +113,41 @@ export function Sidenav({ brandImg, brandName, routes }) {
                                         ? 'block sm:hidden'
                                         : ''
 
-                                    return (
-                                        (!role || role === roleNow) &&
-                                        !hidden && (
-                                            <li
-                                                key={name}
-                                                className={isMobileOnly}
-                                            >
-                                                <NavLink
-                                                    to={`/${layout}${path}`}
-                                                >
-                                                    {({ isActive }) => (
-                                                        <Button
-                                                            variant={
-                                                                isActive
-                                                                    ? 'gradient'
-                                                                    : 'text'
-                                                            }
-                                                            color={
-                                                                isActive
-                                                                    ? sidenavColor
-                                                                    : sidenavType ===
-                                                                      'dark'
-                                                                    ? 'white'
-                                                                    : 'blue-gray'
-                                                            }
-                                                            className="flex items-center gap-4 px-4 capitalize"
-                                                            fullWidth
+                                    // Memeriksa apakah role pengguna ada dalam array role yang ditentukan
+                                    return (role && role.includes(roleNow)) ||
+                                        (!role && !hidden) ? (
+                                        <li key={name} className={isMobileOnly}>
+                                            <NavLink to={`/${layout}${path}`}>
+                                                {({ isActive }) => (
+                                                    <Button
+                                                        variant={
+                                                            isActive
+                                                                ? 'gradient'
+                                                                : 'text'
+                                                        }
+                                                        color={
+                                                            isActive
+                                                                ? sidenavColor
+                                                                : sidenavType ===
+                                                                  'dark'
+                                                                ? 'white'
+                                                                : 'blue-gray'
+                                                        }
+                                                        className="flex items-center gap-4 px-4 capitalize"
+                                                        fullWidth
+                                                    >
+                                                        {icon}
+                                                        <Typography
+                                                            color="inherit"
+                                                            className="font-medium capitalize"
                                                         >
-                                                            {icon}
-                                                            <Typography
-                                                                color="inherit"
-                                                                className="font-medium capitalize"
-                                                            >
-                                                                {name}
-                                                            </Typography>
-                                                        </Button>
-                                                    )}
-                                                </NavLink>
-                                            </li>
-                                        )
-                                    )
+                                                            {name}
+                                                        </Typography>
+                                                    </Button>
+                                                )}
+                                            </NavLink>
+                                        </li>
+                                    ) : null
                                 }
                             )}
                         </ul>

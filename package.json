@@ -28,7 +28,8 @@
         "react-qr-scanner": "^1.0.0-alpha.11",
         "react-router-dom": "6.17.0",
         "react-select": "^5.8.3",
-        "react-webcam": "^7.2.0"
+        "react-webcam": "^7.2.0",
+        "recharts": "^2.13.3"
     },
     "devDependencies": {
         "@types/react": "18.2.31",

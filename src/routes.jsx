@@ -1,13 +1,10 @@
 import {
     HomeIcon,
     UserCircleIcon,
-    TableCellsIcon,
     InformationCircleIcon,
     ServerStackIcon,
-    RectangleStackIcon,
     CameraIcon,
     DocumentIcon,
-    CpuChipIcon,
     PlayPauseIcon,
     CheckIcon,
 } from '@heroicons/react/24/solid'
@@ -21,6 +18,7 @@ import {
 } from '@/pages/dashboard'
 import { SignIn, SignUp } from '@/pages/auth'
 import ScanQR from './pages/dashboard/scanQR'
+import ReportingPage from './pages/dashboard/laporan'
 import DetailBerkas from './pages/dashboard/detailBerkas'
 import Status from './pages/dashboard/status'
 import { Roles } from './pages/dashboard/roles'
@@ -86,6 +84,13 @@ export const routes = [
                 path: '/roles',
                 element: <Roles />,
                 role: 'Admin',
+            },
+            {
+                icon: <InformationCircleIcon {...icon} />,
+                name: 'Laporan',
+                path: '/laporan',
+                element: <ReportingPage />,
+                role: ['Admin', 'Kepala Seksi Survei dan Pemetaan'],
             },
             {
                 hidden: true,
