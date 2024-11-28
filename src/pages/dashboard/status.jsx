@@ -64,7 +64,7 @@ export function Status() {
             <Card>
                 <CardHeader
                     variant="gradient"
-                    color="grey"
+                    color="gray"
                     className="mb-8 p-6 flex justify-between items-center"
                 >
                     <Typography variant="h6" color="white">
