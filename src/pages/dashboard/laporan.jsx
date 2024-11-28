@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import axios from '../../api/apiTangkApp'
 import {
     BarChart,
     Bar,
@@ -11,57 +10,55 @@ import {
     ResponsiveContainer,
 } from 'recharts'
 import { Button, Spinner } from '@material-tailwind/react' // Importing Material Tailwind components
-import { useMaterialTailwindController } from '@/context' // Atau sesuai dengan path yang benar
 
 const ReportingPage = () => {
-    const [controller] = useMaterialTailwindController()
-    const { roleNow, token, user } = controller
-    const [berkasData, setBerkasData] = useState([])
-    const [loading, setLoading] = useState(true)
-    const [refresh, setRefresh] = useState(false)
-    const [error, setError] = useState(null) // Error state
+    // Dummy data simulating API response
+    const dummyData = [
+        {
+            tanggalTerima: '2024-01-15',
+            namaPemohon: 'Pemohon 1',
+            noBerkas: '12345',
+            namaKegiatan: 'Kegiatan A',
+            namaPetugasUkur: 'Petugas 1',
+            status: 'Selesai',
+            lastStatus: { name: 'Selesai' },
+        },
+        {
+            tanggalTerima: '2024-02-20',
+            namaPemohon: 'Pemohon 2',
+            noBerkas: '12346',
+            namaKegiatan: 'Kegiatan B',
+            namaPetugasUkur: 'Petugas 2',
+            status: 'Proses',
+            lastStatus: { name: 'Proses' },
+        },
+        {
+            tanggalTerima: '2024-03-10',
+            namaPemohon: 'Pemohon 3',
+            noBerkas: '12347',
+            namaKegiatan: 'Kegiatan C',
+            namaPetugasUkur: 'Petugas 3',
+            status: 'Selesai',
+            lastStatus: { name: 'Selesai' },
+        },
+        {
+            tanggalTerima: '2024-04-05',
+            namaPemohon: 'Pemohon 4',
+            noBerkas: '12348',
+            namaKegiatan: 'Kegiatan D',
+            namaPetugasUkur: 'Petugas 4',
+            status: 'Selesai',
+            lastStatus: { name: 'Selesai' },
+        },
+    ]
 
-    // Fetch data from backend API
+    const [berkasData, setBerkasData] = useState(dummyData)
+    const [loading, setLoading] = useState(false)
+
+    // Simulate the loading state
     useEffect(() => {
-        const fetchData = async () => {
-            setLoading(true)
-            setError(null)
-
-            try {
-                const response = await axios.post(
-                    'berkas',
-                    { role: roleNow },
-                    {
-                        headers: {
-                            Authorization: `Bearer ${token}`,
-                            Role: roleNow,
-                        },
-                    }
-                )
-
-                if (response.status === 200 && Array.isArray(response.data)) {
-                    const processedData = processBerkasData(response.data)
-
-                    // Sort data berdasarkan `dateIn` secara descending (latest first)
-                    const sortedData = processedData.sort(
-                        (a, b) => new Date(b.dateIn) - new Date(a.dateIn) // Ubah ke `a.dateIn - b.dateIn` untuk ascending
-                    )
-
-                    setBerkasData(sortedData)
-                } else {
-                    throw new Error('Data tidak valid atau kosong.')
-                }
-            } catch (err) {
-                setError(
-                    err.message || 'Terjadi kesalahan saat mengambil data.'
-                )
-            } finally {
-                setLoading(false)
-            }
-        }
-
-        fetchData()
-    }, [roleNow, token, refresh])
+        setLoading(false)
+    }, [])
 
     // Prepare the data for chart visualizations
     const prepareDataPerMonth = () => {
@@ -237,7 +234,7 @@ const ReportingPage = () => {
                                 <span className="font-medium">
                                     {berkas.namaUser}
                                 </span>{' '}
-                                - {berkas.status[0].name}
+                                - {berkas.status}
                             </li>
                         ))}
                     </ul>
