@@ -98,15 +98,15 @@ export function PetugasUkur() {
                     ) : (
                         <div>
                             {/* Search Input */}
-                            <div className="mb-2 flex justify-start">
+                            <div className="mb-4">
                                 <input
                                     type="text"
+                                    className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+                                    placeholder="Cari NIK/NIP atau Nama"
                                     value={searchQuery}
                                     onChange={(e) =>
                                         setSearchQuery(e.target.value)
-                                    }
-                                    placeholder="Cari NIK atau Nama"
-                                    className="p-2 border border-gray-300 rounded"
+                                    } // Update the search query state
                                 />
                             </div>
 

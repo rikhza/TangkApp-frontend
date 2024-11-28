@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import {
     Dialog,
     DialogHeader,
@@ -19,6 +19,30 @@ const PopUpInsertStatus = ({ onClose, onInsertSuccess }) => {
     const [loading, setLoading] = useState(false)
     const [controller] = useMaterialTailwindController()
     const { token } = controller
+
+    // Fetch the highest indexStatus from the backend
+    useEffect(() => {
+        const fetchHighestIndex = async () => {
+            try {
+                const response = await axios.get('status', {
+                    headers: { Authorization: `Bearer ${token}` },
+                })
+                const statusData = response.data || []
+                const highestIndex = Math.max(
+                    ...statusData.map((status) => status.indexStatus),
+                    0
+                )
+                setFormData((prevFormData) => ({
+                    ...prevFormData,
+                    indexStatus: highestIndex + 1, // Automatically set the next index
+                }))
+            } catch (error) {
+                alert('Gagal memuat data status.')
+            }
+        }
+
+        fetchHighestIndex()
+    }, [token])
 
     const validateForm = () => {
         const newErrors = {}
@@ -58,12 +82,7 @@ const PopUpInsertStatus = ({ onClose, onInsertSuccess }) => {
                     label="Index Status"
                     type="number"
                     value={formData.indexStatus}
-                    onChange={(e) =>
-                        setFormData({
-                            ...formData,
-                            indexStatus: e.target.value,
-                        })
-                    }
+                    disabled // Disable the input since it's automatically set
                     style={{
                         borderColor: errors.indexStatus ? 'red' : undefined,
                     }}

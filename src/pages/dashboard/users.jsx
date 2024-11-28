@@ -177,7 +177,7 @@ export function Users() {
                                 <input
                                     type="text"
                                     className="w-full px-4 py-2 border rounded-md"
-                                    placeholder="Search by NIK or Name"
+                                    placeholder="Cari NIK/NIP atau Nama"
                                     value={searchQuery}
                                     onChange={(e) =>
                                         setSearchQuery(e.target.value)
@@ -187,27 +187,30 @@ export function Users() {
                             <table className="w-full table-auto">
                                 <thead className="bg-transparent text-black">
                                     <tr>
-                                        {['NIK', 'Nama', 'Role', 'Action'].map(
-                                            (header) => (
-                                                <th
-                                                    key={header}
-                                                    className="text-left p-3 font-semibold cursor-pointer"
-                                                    onClick={() =>
-                                                        requestSort(
-                                                            header.toLowerCase()
-                                                        )
-                                                    }
-                                                >
-                                                    {header}
-                                                    {sortConfig.key ===
-                                                        header.toLowerCase() &&
-                                                        (sortConfig.direction ===
-                                                        'ascending'
-                                                            ? ' 🔼'
-                                                            : ' 🔽')}
-                                                </th>
-                                            )
-                                        )}
+                                        {[
+                                            'NIK/NIP',
+                                            'Nama',
+                                            'Role',
+                                            'Action',
+                                        ].map((header) => (
+                                            <th
+                                                key={header}
+                                                className="text-left p-3 font-semibold cursor-pointer"
+                                                onClick={() =>
+                                                    requestSort(
+                                                        header.toLowerCase()
+                                                    )
+                                                }
+                                            >
+                                                {header}
+                                                {sortConfig.key ===
+                                                    header.toLowerCase() &&
+                                                    (sortConfig.direction ===
+                                                    'ascending'
+                                                        ? ' 🔼'
+                                                        : ' 🔽')}
+                                            </th>
+                                        ))}
                                     </tr>
                                 </thead>
                                 <tbody>

@@ -34,7 +34,10 @@ export function Status() {
                 const response = await axios.get('status', {
                     headers: { Authorization: `Bearer ${token}` },
                 })
-                setStatusData(response.data || [])
+                const sortedData = response.data.sort(
+                    (a, b) => a.indexStatus - b.indexStatus
+                )
+                setStatusData(sortedData || [])
             } catch (error) {
                 setError('Gagal memuat data status.')
             } finally {
