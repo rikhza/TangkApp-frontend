@@ -39,12 +39,13 @@ const ReportingPage = () => {
                     }
                 )
 
+                console.log(response.data) // Log response data
+
                 if (response.status === 200 && Array.isArray(response.data)) {
                     const processedData = processBerkasData(response.data)
 
-                    // Sort data berdasarkan `dateIn` secara descending (latest first)
                     const sortedData = processedData.sort(
-                        (a, b) => new Date(b.dateIn) - new Date(a.dateIn) // Ubah ke `a.dateIn - b.dateIn` untuk ascending
+                        (a, b) => new Date(b.dateIn) - new Date(a.dateIn)
                     )
 
                     setBerkasData(sortedData)
@@ -140,18 +141,6 @@ const ReportingPage = () => {
                             <Bar dataKey="jumlahBerkas" fill="#8884d8" />
                         </BarChart>
                     </ResponsiveContainer>
-                </div>
-            </section>
-
-            {/* Laporan Rata-Rata Berkas Selesai */}
-            <section className="mb-8">
-                <h2 className="text-2xl font-medium mb-4">
-                    Rata-Rata Berkas Selesai
-                </h2>
-                <div className="bg-white shadow-lg rounded-lg p-4">
-                    <h3 className="text-xl">
-                        Rata-rata Berkas yang Selesai: {prepareAverageBerkas()}%
-                    </h3>
                 </div>
             </section>
 
