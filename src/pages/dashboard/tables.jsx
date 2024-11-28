@@ -37,14 +37,6 @@ export function Tables() {
     const [showDetail, setShowDetailPopUp] = useState(false)
     const [selectedBerkas, setSelectedBerkas] = useState(null) // State for selected berkas for detail modal
     const [isFilterOpen, setIsFilterOpen] = useState(false)
-    //   const fetchFilteredData = async (filters) => {
-    //     try {
-    //         const response = await axios.post("berkas/filter", filters); // API filter
-    //         setBerkasData(response.data.data || []);
-    //     } catch (error) {
-    //         console.error("Gagal memuat data:", error);
-    //     }
-    // };
 
     const handlePrintQRCode = (response) => {
         const berkas = response.data

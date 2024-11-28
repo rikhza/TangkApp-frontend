@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import axios from 'axios'
+import axios from '../../api/apiTangkApp'
 import {
     BarChart,
     Bar,
@@ -11,24 +11,57 @@ import {
     ResponsiveContainer,
 } from 'recharts'
 import { Button, Spinner } from '@material-tailwind/react' // Importing Material Tailwind components
+import { useMaterialTailwindController } from '@/context' // Atau sesuai dengan path yang benar
 
 const ReportingPage = () => {
+    const [controller] = useMaterialTailwindController()
+    const { roleNow, token, user } = controller
     const [berkasData, setBerkasData] = useState([])
     const [loading, setLoading] = useState(true)
+    const [refresh, setRefresh] = useState(false)
+    const [error, setError] = useState(null) // Error state
 
     // Fetch data from backend API
     useEffect(() => {
-        axios
-            .get('/api/berkas') // Replace with actual backend API endpoint
-            .then((response) => {
-                setBerkasData(response.data)
+        const fetchData = async () => {
+            setLoading(true)
+            setError(null)
+
+            try {
+                const response = await axios.post(
+                    'berkas',
+                    { role: roleNow },
+                    {
+                        headers: {
+                            Authorization: `Bearer ${token}`,
+                            Role: roleNow,
+                        },
+                    }
+                )
+
+                if (response.status === 200 && Array.isArray(response.data)) {
+                    const processedData = processBerkasData(response.data)
+
+                    // Sort data berdasarkan `dateIn` secara descending (latest first)
+                    const sortedData = processedData.sort(
+                        (a, b) => new Date(b.dateIn) - new Date(a.dateIn) // Ubah ke `a.dateIn - b.dateIn` untuk ascending
+                    )
+
+                    setBerkasData(sortedData)
+                } else {
+                    throw new Error('Data tidak valid atau kosong.')
+                }
+            } catch (err) {
+                setError(
+                    err.message || 'Terjadi kesalahan saat mengambil data.'
+                )
+            } finally {
                 setLoading(false)
-            })
-            .catch((error) => {
-                console.error('Error fetching data:', error)
-                setLoading(false)
-            })
-    }, [])
+            }
+        }
+
+        fetchData()
+    }, [roleNow, token, refresh])
 
     // Prepare the data for chart visualizations
     const prepareDataPerMonth = () => {
