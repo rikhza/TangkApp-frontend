@@ -11,7 +11,7 @@ import {
 } from 'recharts'
 import { Button, Spinner } from '@material-tailwind/react' // Importing Material Tailwind components
 
-const ReportingPage = () => {
+export function Laporan() {
     // Dummy data simulating API response
     const dummyData = [
         {
@@ -232,4 +232,4 @@ const ReportingPage = () => {
     )
 }
 
-export default ReportingPage
+export default Laporan

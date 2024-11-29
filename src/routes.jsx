@@ -1,24 +1,23 @@
 import {
     HomeIcon,
     UserCircleIcon,
-    InformationCircleIcon,
+    ChartBarIcon,
     ServerStackIcon,
     CameraIcon,
-    DocumentIcon,
-    PlayPauseIcon,
-    CheckIcon,
+    ArchiveBoxIcon,
+    QueueListIcon,
+    IdentificationIcon,
 } from '@heroicons/react/24/solid'
 import {
     Home,
-    Tables,
+    BerkasRutin,
     PetugasUkur,
     PetugasSPS,
-    Users,
-    Notifications,
+    Pegawai,
+    Laporan,
 } from '@/pages/dashboard'
 import { SignIn, SignUp } from '@/pages/auth'
 import ScanQR from './pages/dashboard/scanQR'
-import ReportingPage from './pages/dashboard/laporan'
 import DetailBerkas from './pages/dashboard/detailBerkas'
 import Status from './pages/dashboard/status'
 import { Roles } from './pages/dashboard/roles'
@@ -45,10 +44,17 @@ export const routes = [
                 mobileOnly: true,
             },
             {
-                icon: <DocumentIcon {...icon} />,
-                name: 'Berkas Saya',
-                path: '/berkas',
-                element: <Tables />,
+                icon: <ArchiveBoxIcon {...icon} />,
+                name: 'Berkas Rutin',
+                path: '/berkas-rutin',
+                element: <BerkasRutin />,
+            },
+            {
+                icon: <UserCircleIcon {...icon} />,
+                name: 'Pegawai',
+                path: '/pegawai',
+                element: <Pegawai />,
+                role: 'Admin',
             },
             {
                 icon: <UserCircleIcon {...icon} />,
@@ -65,31 +71,24 @@ export const routes = [
                 role: 'Admin',
             },
             {
-                icon: <UserCircleIcon {...icon} />,
-                name: 'Users',
-                path: '/users',
-                element: <Users />,
-                role: 'Admin',
-            },
-            {
-                icon: <PlayPauseIcon {...icon} />,
+                icon: <QueueListIcon {...icon} />,
                 name: 'Status',
                 path: '/status',
                 element: <Status />,
                 role: 'Admin',
             },
             {
-                icon: <CheckIcon {...icon} />,
+                icon: <IdentificationIcon {...icon} />,
                 name: 'Roles',
                 path: '/roles',
                 element: <Roles />,
                 role: 'Admin',
             },
             {
-                icon: <InformationCircleIcon {...icon} />,
+                icon: <ChartBarIcon {...icon} />,
                 name: 'Laporan',
                 path: '/laporan',
-                element: <ReportingPage />,
+                element: <Laporan />,
                 role: ['Admin', 'Kepala Seksi Survei dan Pemetaan'],
             },
             {

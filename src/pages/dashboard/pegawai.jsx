@@ -27,7 +27,7 @@ const colors = [
     'cyan',
 ]
 
-export function Users() {
+export function Pegawai() {
     const [usersData, setUsersData] = useState([])
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState(null)
@@ -339,4 +339,4 @@ export function Users() {
     )
 }
 
-export default Users
+export default Pegawai

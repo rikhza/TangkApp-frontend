@@ -3,7 +3,6 @@ import {
     CardHeader,
     CardBody,
     Typography,
-    Chip,
     IconButton,
     Button,
 } from '@material-tailwind/react'
@@ -25,7 +24,7 @@ import PopUpSelesai from '@/components/popupSelesaiSPJ'
 import ReactDOMServer from 'react-dom/server'
 import GenerateQRCode from '@/components/GenerateQRCode'
 
-export function Tables() {
+export function BerkasRutin() {
     const [controller] = useMaterialTailwindController()
     const { roleNow, token, user } = controller
 
@@ -708,4 +707,4 @@ export function Tables() {
     )
 }
 
-export default Tables
+export default BerkasRutin
