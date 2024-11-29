@@ -10,7 +10,7 @@
         "preview": "vite preview"
     },
     "engines": {
-        "node": "21.7.1"
+        "node": "22.x"
     },
     "dependencies": {
         "@heroicons/react": "^2.0.18",
