@@ -287,6 +287,7 @@ export function Tables() {
                         userIn: user._id,
                         NIK: user.NIK,
                         namaUser: user.nama,
+                        role: roleNow,
                     },
                     {
                         headers: {
@@ -678,7 +679,7 @@ export function Tables() {
                                     NIK: user.NIK,
                                     namaUser: user.nama,
                                     notes,
-                                    role: user.roleNow,
+                                    role: roleNow,
                                     idPetugasUkur,
                                     namaPetugasUkur,
                                     statusBayarPNBP,
