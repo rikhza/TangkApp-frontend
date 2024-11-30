@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react'
 import PropTypes from 'prop-types'
-import { Link, NavLink, useNavigate } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
 import { Button, Typography, Select, Option } from '@material-tailwind/react'
 import {
     useMaterialTailwindController,
@@ -21,8 +21,9 @@ export function Sidenav({ brandImg, brandName, routes }) {
     }
 
     const handleChangeRole = (newRole) => {
-        navigate('/dashboard/home')
+        // Perbarui role dan navigasi ke halaman dashboard setelah role berubah
         setRoleNow(dispatch, newRole)
+        navigate('/dashboard/home') // Arahkan ke halaman utama setelah role berubah
     }
 
     useEffect(() => {
@@ -40,6 +41,104 @@ export function Sidenav({ brandImg, brandName, routes }) {
             document.removeEventListener('mousedown', handleClickOutside)
         }
     }, [dispatch])
+
+    const renderNavLinks = (pages) => {
+        return pages.map(
+            ({ icon, name, path, subRoutes, role, mobileOnly, hidden }) => {
+                const isMobileOnly = mobileOnly ? 'block sm:hidden' : ''
+
+                // Periksa apakah user memiliki hak akses untuk halaman ini berdasarkan role
+                const isAuthorized = (role && role.includes(roleNow)) || !role
+
+                if (!isAuthorized || hidden) return null
+
+                return (
+                    <li key={name} className={isMobileOnly}>
+                        {/* Parent Route */}
+                        {!subRoutes ? (
+                            <NavLink to={`/dashboard${path}`} exact>
+                                {({ isActive }) => (
+                                    <Button
+                                        variant={isActive ? 'gradient' : 'text'}
+                                        color={
+                                            isActive
+                                                ? sidenavColor
+                                                : sidenavType === 'dark'
+                                                ? 'white'
+                                                : 'blue-gray'
+                                        }
+                                        className="flex items-center gap-4 px-4 capitalize"
+                                        fullWidth
+                                    >
+                                        {icon}
+                                        <Typography
+                                            color="inherit"
+                                            className="font-medium capitalize"
+                                        >
+                                            {name}
+                                        </Typography>
+                                    </Button>
+                                )}
+                            </NavLink>
+                        ) : (
+                            // Parent Route with Sub-routes (non-clickable)
+                            <Typography
+                                variant="text"
+                                color="white"
+                                className="flex items-center gap-4 px-4 capitalize cursor-default mt-2"
+                            >
+                                {icon}
+                                <Typography
+                                    color="inherit"
+                                    className="font-medium capitalize"
+                                >
+                                    {name}
+                                </Typography>
+                            </Typography>
+                        )}
+
+                        {/* Sub-routes */}
+                        {subRoutes && (
+                            <ul className="ml-4">
+                                {subRoutes.map(({ name, path }) => (
+                                    <li key={name}>
+                                        <NavLink to={`/dashboard${path}`} exact>
+                                            {({ isActive }) => (
+                                                <Button
+                                                    variant={
+                                                        isActive
+                                                            ? 'gradient'
+                                                            : 'text'
+                                                    }
+                                                    color={
+                                                        isActive
+                                                            ? sidenavColor
+                                                            : sidenavType ===
+                                                              'dark'
+                                                            ? 'white'
+                                                            : 'blue-gray'
+                                                    }
+                                                    fullWidth
+                                                    className="flex items-center gap-4 px-4 capitalize"
+                                                >
+                                                    <Typography
+                                                        color="inherit"
+                                                        className="font-medium capitalize"
+                                                    >
+                                                        {name}
+                                                    </Typography>
+                                                </Button>
+                                            )}
+                                        </NavLink>
+                                    </li>
+                                ))}
+                            </ul>
+                        )}
+                    </li>
+                )
+            }
+        )
+    }
 
     return (
         <aside
@@ -59,7 +158,6 @@ export function Sidenav({ brandImg, brandName, routes }) {
             </div>
 
             <div className="m-4">
-                {/* Role Selection */}
                 <div className="mb-4">
                     <Typography
                         variant="small"
@@ -81,7 +179,7 @@ export function Sidenav({ brandImg, brandName, routes }) {
                     </Select>
                 </div>
 
-                {/* Routes Mapping */}
+                {/* Render Routes with Sub-navigation */}
                 {routes.map(({ layout, title, pages }, key) =>
                     title !== 'auth pages' ? (
                         <ul key={key} className="mb-4 flex flex-col gap-1">
@@ -100,56 +198,7 @@ export function Sidenav({ brandImg, brandName, routes }) {
                                     </Typography>
                                 </li>
                             )}
-                            {pages.map(
-                                ({
-                                    icon,
-                                    name,
-                                    path,
-                                    role,
-                                    mobileOnly,
-                                    hidden,
-                                }) => {
-                                    const isMobileOnly = mobileOnly
-                                        ? 'block sm:hidden'
-                                        : ''
-
-                                    // Memeriksa apakah role pengguna ada dalam array role yang ditentukan
-                                    return (role && role.includes(roleNow)) ||
-                                        (!role && !hidden) ? (
-                                        <li key={name} className={isMobileOnly}>
-                                            <NavLink to={`/${layout}${path}`}>
-                                                {({ isActive }) => (
-                                                    <Button
-                                                        variant={
-                                                            isActive
-                                                                ? 'gradient'
-                                                                : 'text'
-                                                        }
-                                                        color={
-                                                            isActive
-                                                                ? sidenavColor
-                                                                : sidenavType ===
-                                                                  'dark'
-                                                                ? 'white'
-                                                                : 'blue-gray'
-                                                        }
-                                                        className="flex items-center gap-4 px-4 capitalize"
-                                                        fullWidth
-                                                    >
-                                                        {icon}
-                                                        <Typography
-                                                            color="inherit"
-                                                            className="font-medium capitalize"
-                                                        >
-                                                            {name}
-                                                        </Typography>
-                                                    </Button>
-                                                )}
-                                            </NavLink>
-                                        </li>
-                                    ) : null
-                                }
-                            )}
+                            {renderNavLinks(pages)}
                         </ul>
                     ) : null
                 )}

@@ -45,30 +45,43 @@ export const routes = [
             },
             {
                 icon: <ArchiveBoxIcon {...icon} />,
-                name: 'Berkas Rutin',
-                path: '/berkas-rutin',
+                name: 'Berkas',
+                path: '/berkas',
                 element: <BerkasRutin />,
+                subRoutes: [
+                    {
+                        name: 'Berkas Rutin',
+                        path: '/berkas/berkas-rutin',
+                        element: <BerkasRutin />,
+                    },
+                    {
+                        name: 'Berkas Alih Media',
+                        path: '/berkas/berkas-alih-media',
+                        element: <BerkasRutin />,
+                    },
+                ],
             },
             {
                 icon: <UserCircleIcon {...icon} />,
-                name: 'Pegawai',
-                path: '/pegawai',
-                element: <Pegawai />,
-                role: 'Admin',
-            },
-            {
-                icon: <UserCircleIcon {...icon} />,
-                name: 'Petugas Ukur',
-                path: '/petugas-ukur',
-                element: <PetugasUkur />,
-                role: 'Admin',
-            },
-            {
-                icon: <UserCircleIcon {...icon} />,
-                name: 'Petugas SPS',
-                path: '/petugas-sps',
-                element: <PetugasSPS />,
-                role: 'Admin',
+                name: 'User',
+                path: '/user',
+                subRoutes: [
+                    {
+                        name: 'Pegawai',
+                        path: '/user/pegawai', // Corrected path
+                        element: <Pegawai />,
+                    },
+                    {
+                        name: 'Petugas Ukur',
+                        path: '/user/petugas-ukur', // Corrected path
+                        element: <PetugasUkur />,
+                    },
+                    {
+                        name: 'Petugas SPS',
+                        path: '/user/petugas-sps', // Corrected path
+                        element: <PetugasSPS />,
+                    },
+                ],
             },
             {
                 icon: <QueueListIcon {...icon} />,
@@ -93,7 +106,7 @@ export const routes = [
             },
             {
                 hidden: true,
-                path: '/berkas/:id',
+                path: '/berkas/detail/:id',
                 element: <DetailBerkas />,
             },
         ],
