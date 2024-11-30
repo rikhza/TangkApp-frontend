@@ -187,6 +187,7 @@ export function Roles() {
                                     <tr>
                                         {[
                                             'Role Name',
+                                            'Kategori Berkas', // Kolom baru untuk kategoriBerkas
                                             'Access Status',
                                             'Action',
                                         ].map((header) => (
@@ -214,7 +215,7 @@ export function Roles() {
                                     {filteredRoles.length === 0 ? (
                                         <tr>
                                             <td
-                                                colSpan="3"
+                                                colSpan="4"
                                                 className="p-4 text-center"
                                             >
                                                 No roles found
@@ -226,11 +227,15 @@ export function Roles() {
                                                 key={role._id}
                                                 className="hover:bg-gray-100 cursor-pointer"
                                             >
-                                                <td className="p-3">
+                                                <td className="p-3  max-w-xs break-words">
                                                     {highlightText(
                                                         role.nama,
                                                         searchQuery
                                                     )}
+                                                </td>
+                                                <td className="p-3 max-w-xs break-words">
+                                                    {role.kategoriBerkas ||
+                                                        'N/A'}
                                                 </td>
                                                 <td className="p-3 max-w-xs break-words">
                                                     <div className="flex gap-2 flex-wrap">
@@ -327,7 +332,7 @@ export function Roles() {
 
             {showUpdatePopup && selectedRole && (
                 <PopUpUpdateRole
-                    onClose={() => setShowInsertPopup(false)}
+                    onClose={() => setShowUpdatePopup(false)}
                     data={selectedRole}
                     setShowUpdatePopup={setShowUpdatePopup}
                     onUpdateSuccess={() => {

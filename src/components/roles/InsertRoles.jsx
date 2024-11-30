@@ -15,6 +15,7 @@ const PopUpInsertRole = ({ onClose, onInsertSuccess }) => {
     const [formData, setFormData] = useState({
         nama: '',
         accessStatus: [], // Array to hold selected access status IDs
+        kategoriBerkas: '', // New field for kategoriBerkas
     })
     const [errors, setErrors] = useState({})
     const [loading, setLoading] = useState(false)
@@ -43,6 +44,8 @@ const PopUpInsertRole = ({ onClose, onInsertSuccess }) => {
         if (!formData.nama.trim()) newErrors.nama = 'Role name cannot be empty'
         if (formData.accessStatus.length === 0)
             newErrors.accessStatus = 'At least one access status is required'
+        if (!formData.kategoriBerkas)
+            newErrors.kategoriBerkas = 'Please select a category for Berkas'
         setErrors(newErrors)
         return Object.keys(newErrors).length === 0
     }
@@ -94,6 +97,12 @@ const PopUpInsertRole = ({ onClose, onInsertSuccess }) => {
         }
     }
 
+    // Options for the kategoriBerkas dropdown
+    const kategoriBerkasOptions = [
+        { value: 'rutin', label: 'Rutin' },
+        { value: 'alih-media', label: 'Alih-Media' },
+    ]
+
     return (
         <Dialog open={true} handler={onClose}>
             <DialogHeader>Tambah Role</DialogHeader>
@@ -143,6 +152,27 @@ const PopUpInsertRole = ({ onClose, onInsertSuccess }) => {
                 {errors.accessStatus && (
                     <span style={{ color: 'red', fontSize: '12px' }}>
                         {errors.accessStatus}
+                    </span>
+                )}
+
+                {/* Select Kategori Berkas */}
+                <Select
+                    name="kategoriBerkas"
+                    options={kategoriBerkasOptions} // Use predefined options for kategoriBerkas
+                    value={kategoriBerkasOptions.find(
+                        (option) => option.value === formData.kategoriBerkas
+                    )}
+                    onChange={(selected) =>
+                        setFormData({
+                            ...formData,
+                            kategoriBerkas: selected.value,
+                        })
+                    }
+                    placeholder="Select Kategori Berkas"
+                />
+                {errors.kategoriBerkas && (
+                    <span style={{ color: 'red', fontSize: '12px' }}>
+                        {errors.kategoriBerkas}
                     </span>
                 )}
             </DialogBody>

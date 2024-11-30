@@ -21,6 +21,7 @@ import ScanQR from './pages/dashboard/scanQR'
 import DetailBerkas from './pages/dashboard/detailBerkas'
 import Status from './pages/dashboard/status'
 import { Roles } from './pages/dashboard/roles'
+import BerkasAlihMedia from './pages/dashboard/berkasAlihMedia'
 
 const icon = {
     className: 'w-5 h-5 text-inherit',
@@ -47,7 +48,6 @@ export const routes = [
                 icon: <ArchiveBoxIcon {...icon} />,
                 name: 'Berkas',
                 path: '/berkas',
-                element: <BerkasRutin />,
                 subRoutes: [
                     {
                         name: 'Berkas Rutin',
@@ -57,7 +57,7 @@ export const routes = [
                     {
                         name: 'Berkas Alih Media',
                         path: '/berkas/berkas-alih-media',
-                        element: <BerkasRutin />,
+                        element: <BerkasAlihMedia />,
                     },
                 ],
             },

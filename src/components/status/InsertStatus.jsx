@@ -5,6 +5,8 @@ import {
     DialogBody,
     DialogFooter,
     Input,
+    Select,
+    Option,
     Button,
 } from '@material-tailwind/react'
 import axios from '../../api/apiTangkApp'
@@ -14,6 +16,7 @@ const PopUpInsertStatus = ({ onClose, onInsertSuccess }) => {
     const [formData, setFormData] = useState({
         indexStatus: '',
         nama: '',
+        kategoriBerkas: '', // New field for kategoriBerkas
     })
     const [errors, setErrors] = useState({})
     const [loading, setLoading] = useState(false)
@@ -52,6 +55,9 @@ const PopUpInsertStatus = ({ onClose, onInsertSuccess }) => {
         if (!formData.nama.trim()) {
             newErrors.nama = 'Nama Status tidak boleh kosong'
         }
+        if (!formData.kategoriBerkas) {
+            newErrors.kategoriBerkas = 'Kategori Berkas tidak boleh kosong'
+        }
         setErrors(newErrors)
         return Object.keys(newErrors).length === 0
     }
@@ -77,12 +83,17 @@ const PopUpInsertStatus = ({ onClose, onInsertSuccess }) => {
     return (
         <Dialog open={true} handler={onClose}>
             <DialogHeader>Tambah Status</DialogHeader>
-            <DialogBody>
+            <DialogBody style={{ display: 'grid', gap: '10px' }}>
                 <Input
                     label="Index Status"
                     type="number"
                     value={formData.indexStatus}
-                    disabled // Disable the input since it's automatically set
+                    onChange={(e) =>
+                        setFormData({
+                            ...formData,
+                            indexStatus: e.target.value,
+                        })
+                    }
                     style={{
                         borderColor: errors.indexStatus ? 'red' : undefined,
                     }}
@@ -108,6 +119,27 @@ const PopUpInsertStatus = ({ onClose, onInsertSuccess }) => {
                 {errors.nama && (
                     <span style={{ color: 'red', fontSize: '12px' }}>
                         {errors.nama}
+                    </span>
+                )}
+                <Select
+                    label="Kategori Berkas"
+                    value={formData.kategoriBerkas}
+                    onChange={(value) =>
+                        setFormData({
+                            ...formData,
+                            kategoriBerkas: value,
+                        })
+                    }
+                    style={{
+                        borderColor: errors.kategoriBerkas ? 'red' : undefined,
+                    }}
+                >
+                    <Option value="Rutin">Rutin</Option>
+                    <Option value="Alih-Media">Alih-Media</Option>
+                </Select>
+                {errors.kategoriBerkas && (
+                    <span style={{ color: 'red', fontSize: '12px' }}>
+                        {errors.kategoriBerkas}
                     </span>
                 )}
             </DialogBody>

@@ -13,7 +13,7 @@ import Select from 'react-select'
 import axios from '../api/apiTangkApp'
 import { useMaterialTailwindController } from '@/context'
 
-const PopUpInsertBerkas = ({ onClose, onInsertSuccess }) => {
+const PopUpInsertBerkas = ({ onClose, onInsertSuccess, kategoriBerkas }) => {
     const currentYear = new Date().getFullYear()
     const years = Array.from(
         { length: currentYear - 2020 + 1 },
@@ -57,6 +57,7 @@ const PopUpInsertBerkas = ({ onClose, onInsertSuccess }) => {
         namaPIC: '',
         kontakPIC: '',
         idUser: user._id,
+        kategoriBerkas,
     })
 
     // const [newPIC, setNewPIC] = useState({ namaPIC: '', kontakPIC: '' }) // Menampung input PIC baru
@@ -165,6 +166,7 @@ const PopUpInsertBerkas = ({ onClose, onInsertSuccess }) => {
             namaPetugasSPS,
             idPetugasUkur,
             namaPetugasUkur,
+            kategoriBerkas,
         } = formData
 
         // Validasi semua kolom wajib

@@ -93,16 +93,19 @@ export function Status() {
                             <table className="w-full table-auto">
                                 <thead>
                                     <tr>
-                                        {['Index Status', 'Nama', 'Action'].map(
-                                            (header) => (
-                                                <th
-                                                    key={header}
-                                                    className="text-left p-2"
-                                                >
-                                                    {header}
-                                                </th>
-                                            )
-                                        )}
+                                        {[
+                                            'Index Status',
+                                            'Nama',
+                                            'Kategori Berkas',
+                                            'Action',
+                                        ].map((header) => (
+                                            <th
+                                                key={header}
+                                                className="text-left p-2"
+                                            >
+                                                {header}
+                                            </th>
+                                        ))}
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -113,6 +116,10 @@ export function Status() {
                                             </td>
                                             <td className="p-2">
                                                 {status.nama}
+                                            </td>
+                                            {/* Add Kategori Berkas */}
+                                            <td className="p-2">
+                                                {status.kategoriBerkas}
                                             </td>
                                             <td className="p-2 flex gap-2">
                                                 <IconButton

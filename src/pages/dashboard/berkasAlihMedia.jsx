@@ -24,7 +24,7 @@ import PopUpSelesai from '@/components/popupSelesaiSPJ'
 import ReactDOMServer from 'react-dom/server'
 import GenerateQRCode from '@/components/GenerateQRCode'
 
-export function BerkasRutin() {
+export function BerkasAlihMedia() {
     const [controller] = useMaterialTailwindController()
     const { roleNow, token, user } = controller
 
@@ -94,7 +94,7 @@ export function BerkasRutin() {
             try {
                 const response = await axios.post(
                     'berkas',
-                    { role: roleNow, kategoriBerkas: 'rutin' },
+                    { role: roleNow, kategoriBerkas: 'alih-media' },
                     {
                         headers: {
                             Authorization: `Bearer ${token}`,
@@ -373,7 +373,7 @@ export function BerkasRutin() {
             const response = await axios.post('berkas/filter', {
                 ...filters,
                 role: roleNow, // Kirim role sebagai bagian dari filter
-                kategoriBerkas: 'rutin',
+                kategoriBerkas: 'alih-media',
             })
             setBerkasData(response.data.data || [])
         } catch (error) {
@@ -624,7 +624,7 @@ export function BerkasRutin() {
                         }
                         setRefresh(!refresh)
                     }}
-                    kategoriBerkas={'rutin'}
+                    kategoriBerkas={'alih-media'}
                 />
             )}
 
@@ -709,4 +709,4 @@ export function BerkasRutin() {
     )
 }
 
-export default BerkasRutin
+export default BerkasAlihMedia

@@ -16,6 +16,7 @@ const PopUpUpdateRole = ({ data, onClose, onUpdateSuccess }) => {
         _id: data._id, // Make sure to include the ID for update
         nama: data.nama || '',
         accessStatus: data.accessStatus?.map((status) => status._id) || [], // Array to hold selected access status IDs
+        kategoriBerkas: data.kategoriBerkas || '', // Add kategoriBerkas to the formData
     })
     const [errors, setErrors] = useState({})
     const [loading, setLoading] = useState(false)
@@ -44,6 +45,8 @@ const PopUpUpdateRole = ({ data, onClose, onUpdateSuccess }) => {
         if (!formData.nama.trim()) newErrors.nama = 'Role name cannot be empty'
         if (formData.accessStatus.length === 0)
             newErrors.accessStatus = 'At least one access status is required'
+        if (!formData.kategoriBerkas)
+            newErrors.kategoriBerkas = 'Please select a category for Berkas' // Validate kategoriBerkas
         setErrors(newErrors)
         return Object.keys(newErrors).length === 0
     }
@@ -99,6 +102,12 @@ const PopUpUpdateRole = ({ data, onClose, onUpdateSuccess }) => {
         }
     }
 
+    // Options for the kategoriBerkas dropdown
+    const kategoriBerkasOptions = [
+        { value: 'rutin', label: 'Rutin' },
+        { value: 'alih-media', label: 'Alih-Media' },
+    ]
+
     return (
         <Dialog open={true} handler={onClose}>
             <DialogHeader>Edit Role</DialogHeader>
@@ -135,7 +144,7 @@ const PopUpUpdateRole = ({ data, onClose, onUpdateSuccess }) => {
                         label:
                             statusData.find((status) => status._id === id)
                                 ?.nama || '',
-                    }))}
+                    }))} // Set the selected value based on formData.accessStatus
                     onChange={(selected) =>
                         setFormData({
                             ...formData,
@@ -148,6 +157,27 @@ const PopUpUpdateRole = ({ data, onClose, onUpdateSuccess }) => {
                 {errors.accessStatus && (
                     <span style={{ color: 'red', fontSize: '12px' }}>
                         {errors.accessStatus}
+                    </span>
+                )}
+
+                {/* Select Kategori Berkas */}
+                <Select
+                    name="kategoriBerkas"
+                    options={kategoriBerkasOptions} // Use predefined options for kategoriBerkas
+                    value={kategoriBerkasOptions.find(
+                        (option) => option.value === formData.kategoriBerkas
+                    )}
+                    onChange={(selected) =>
+                        setFormData({
+                            ...formData,
+                            kategoriBerkas: selected.value,
+                        })
+                    }
+                    placeholder="Select Kategori Berkas"
+                />
+                {errors.kategoriBerkas && (
+                    <span style={{ color: 'red', fontSize: '12px' }}>
+                        {errors.kategoriBerkas}
                     </span>
                 )}
             </DialogBody>

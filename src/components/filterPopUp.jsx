@@ -136,31 +136,15 @@ const FilterPopUp = ({ isOpen, onClose, onApplyFilter }) => {
                             Kegiatan
                         </Typography>
                         <Select
-                            options={dropdownData.kegiatan
-                                ?.filter(
-                                    (item) =>
-                                        item.namaSubsek ===
-                                        'Survei dan Pemetaan'
-                                )
-                                .map((item) => ({
-                                    label:
-                                        item.idKegiatan +
-                                        ' - ' +
-                                        item.namaKegiatan, // Contoh kombinasi untuk label
-                                    value: item._id, // Atau sesuai kebutuhan, seperti item.idKegiatan
-                                }))}
+                            options={dropdownData.kegiatan}
                             placeholder="Pilih Kegiatan"
                             isClearable
-                            value={dropdownData.kegiatan
-                                ?.filter(
-                                    (item) =>
-                                        item.namaSubsek ===
-                                        'Survei dan Pemetaan'
-                                )
-                                .find(
+                            value={
+                                dropdownData.kegiatan.find(
                                     (option) =>
                                         option.value === filters.kegiatan
-                                )}
+                                ) || null
+                            } // Ensure fallback to null
                             onChange={(selected) =>
                                 handleSelectChange('kegiatan', selected)
                             }
@@ -187,9 +171,12 @@ const FilterPopUp = ({ isOpen, onClose, onApplyFilter }) => {
                             options={dropdownData.jenisHak}
                             placeholder="Pilih Jenis Hak"
                             isClearable
-                            value={dropdownData.jenisHak.find(
-                                (option) => option.value === filters.jenisHak
-                            )}
+                            value={
+                                dropdownData.jenisHak.find(
+                                    (option) =>
+                                        option.value === filters.jenisHak
+                                ) || null
+                            } // Ensure fallback to null
                             onChange={(selected) =>
                                 handleSelectChange('jenisHak', selected)
                             }
@@ -216,9 +203,11 @@ const FilterPopUp = ({ isOpen, onClose, onApplyFilter }) => {
                             options={dropdownData.desa}
                             placeholder="Pilih Desa"
                             isClearable
-                            value={dropdownData.desa.find(
-                                (option) => option.value === filters.desa
-                            )}
+                            value={
+                                dropdownData.desa.find(
+                                    (option) => option.value === filters.desa
+                                ) || null
+                            } // Ensure fallback to null
                             onChange={(selected) =>
                                 handleSelectChange('desa', selected)
                             }
@@ -245,9 +234,12 @@ const FilterPopUp = ({ isOpen, onClose, onApplyFilter }) => {
                             options={dropdownData.petugasUkur}
                             placeholder="Pilih Petugas Ukur"
                             isClearable
-                            value={dropdownData.petugasUkur.find(
-                                (option) => option.value === filters.petugasUkur
-                            )}
+                            value={
+                                dropdownData.petugasUkur.find(
+                                    (option) =>
+                                        option.value === filters.petugasUkur
+                                ) || null
+                            } // Ensure fallback to null
                             onChange={(selected) =>
                                 handleSelectChange('petugasUkur', selected)
                             }
