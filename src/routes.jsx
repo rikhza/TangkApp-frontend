@@ -65,6 +65,7 @@ export const routes = [
                 icon: <UserCircleIcon {...icon} />,
                 name: 'User',
                 path: '/user',
+                role: 'Admin',
                 subRoutes: [
                     {
                         name: 'Pegawai',
