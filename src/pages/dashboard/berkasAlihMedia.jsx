@@ -16,7 +16,7 @@ import {
 import { useMaterialTailwindController } from '@/context'
 import { useEffect, useState } from 'react'
 import axios from '../../api/apiTangkApp' // Import Axios instance
-import PopUpInsertBerkas from '@/components/InsertPopup'
+import PopUpInsertBerkas from '@/components/InsertPopupAlihMedia'
 import DetailModal from '@/components/detailPopUp' // Import the detail modal
 import PopUpUpdateBerkas from '@/components/PopUpUpdateBerkas'
 import FilterPopUp from '@/components/filterPopUp'
