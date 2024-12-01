@@ -76,45 +76,20 @@ const DetailModal = ({
 
     // Fungsi untuk mencetak QR Code
     const handlePrintQRCode = () => {
-        if (qrCodeRef.current) {
-            const printWindow = window.open('', '_blank')
+        const printWindow = window.open('', '_blank')
 
-            if (printWindow) {
-                // Menulis HTML untuk print window
-                printWindow.document.write(
-                    '<html><head><title>Print QR Code</title>'
-                )
-                printWindow.document.write('<style>')
-                printWindow.document.write(`
-                    body {
-                        font-family: Arial, sans-serif;
-                        text-align: center;
-                    }
-                    .qr-container {
-                        display: inline-block;
-                        padding: 20px;
-                        border: 1px solid #ddd;
-                        background-color: #fff;
-                    }
-                    img {
-                        max-width: 100%;
-                        height: auto;
-                    }
-                `)
-                printWindow.document.write('</style></head><body>')
-
-                // Menulis QR Code ke dalam print window
-                printWindow.document.write('<div class="qr-container">')
-                printWindow.document.write(qrCodeRef.current.innerHTML) // Menyalin isi QR Code
-                printWindow.document.write(`<h2>${id}</h2>`) // Menambahkan ID atau informasi lain
-                printWindow.document.write('</div>')
-
-                printWindow.document.write('</body></html>')
-                printWindow.document.close()
-
-                // Menunggu sampai konten siap dan kemudian mencetaknya
-                printWindow.print()
-            }
+        if (printWindow) {
+            printWindow.document.write(
+                `<html><head><title>https://tangkapp.id/dashboard/berkas/${berkas._id}</title></head><body>`
+            )
+            printWindow.document.write('<div style="text-align:center;">')
+            printWindow.document.write(qrCodeRef.current.innerHTML)
+            printWindow.document.write(
+                `<h2>${berkas.noBerkas}/${berkas.tahunBerkas}</h2>`
+            )
+            printWindow.document.write('</div></body></html>')
+            printWindow.document.close()
+            printWindow.print()
         }
     }
 
@@ -273,8 +248,8 @@ const DetailModal = ({
                     </div>
                 </div>
                 <div className="mt-6 border-t pt-4">
-                    <div>
-                        <GenerateQRCode id={berkas._id} ref={qrCodeRef} />
+                    <div ref={qrCodeRef}>
+                        <GenerateQRCode id={berkas._id} />
                     </div>
                     <Button
                         color="blue"
