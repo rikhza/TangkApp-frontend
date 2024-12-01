@@ -14,11 +14,13 @@ import { useMaterialTailwindController } from '@/context'
 
 const PopUpUpdateStatus = ({ data, onClose, onUpdateSuccess }) => {
     const [formData, setFormData] = useState({
-        indexStatus: data.indexStatus || '',
+        indexStatus: data.indexStatus || 0,
         nama: data.nama || '',
         kategoriBerkas: data.kategoriBerkas || '', // Ensure to handle kategoriBerkas
         _id: data._id,
     })
+    console.log(data)
+
     const [errors, setErrors] = useState({})
     const [loading, setLoading] = useState(false)
     const [controller] = useMaterialTailwindController()
@@ -116,8 +118,8 @@ const PopUpUpdateStatus = ({ data, onClose, onUpdateSuccess }) => {
                         borderColor: errors.kategoriBerkas ? 'red' : undefined,
                     }}
                 >
-                    <Option value="Rutin">Rutin</Option>
-                    <Option value="Alih-Media">Alih-Media</Option>
+                    <Option value="rutin">Rutin</Option>
+                    <Option value="alih-media">Alih-Media</Option>
                 </Select>
                 {errors.kategoriBerkas && (
                     <span style={{ color: 'red', fontSize: '12px' }}>

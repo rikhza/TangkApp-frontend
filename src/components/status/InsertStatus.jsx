@@ -134,8 +134,8 @@ const PopUpInsertStatus = ({ onClose, onInsertSuccess }) => {
                         borderColor: errors.kategoriBerkas ? 'red' : undefined,
                     }}
                 >
-                    <Option value="Rutin">Rutin</Option>
-                    <Option value="Alih-Media">Alih-Media</Option>
+                    <Option value="rutin">Rutin</Option>
+                    <Option value="alih-media">Alih-Media</Option>
                 </Select>
                 {errors.kategoriBerkas && (
                     <span style={{ color: 'red', fontSize: '12px' }}>

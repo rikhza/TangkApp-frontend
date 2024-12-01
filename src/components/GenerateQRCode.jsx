@@ -1,9 +1,9 @@
-// import
+import React from 'react'
 import { QRCode } from 'react-qrcode-logo'
 
-const GenerateQRCode = ({ id }) => {
+const GenerateQRCode = React.forwardRef(({ id }, ref) => {
     return (
-        <div>
+        <div ref={ref}>
             <h1>Kode QR Berkas</h1>
             <QRCode
                 value={`https://tangkapp.id/dashboard/berkas/${id}`}
@@ -22,5 +22,6 @@ const GenerateQRCode = ({ id }) => {
             />
         </div>
     )
-}
+})
+
 export default GenerateQRCode

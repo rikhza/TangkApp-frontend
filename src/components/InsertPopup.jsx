@@ -221,7 +221,7 @@ const PopUpInsertBerkas = ({ onClose, onInsertSuccess, kategoriBerkas }) => {
             }
         } catch (error) {
             setValidationErrors(errors)
-            // setAlertMessage(error.response.data.error)
+            setAlertMessage(error.response.data.error)
             console.error('Gagal menambahkan data:', error)
         } finally {
             setLoading(false)

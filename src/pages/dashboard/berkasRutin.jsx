@@ -287,6 +287,7 @@ export function BerkasRutin() {
                         NIK: user.NIK,
                         namaUser: user.nama,
                         role: roleNow,
+                        kategoriBerkas: 'rutin',
                     },
                     {
                         headers: {
@@ -684,6 +685,7 @@ export function BerkasRutin() {
                                     idPetugasUkur,
                                     namaPetugasUkur,
                                     statusBayarPNBP,
+                                    kategoriBerkas: 'rutin',
                                 },
                                 {
                                     headers: {

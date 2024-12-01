@@ -249,7 +249,7 @@ export function Roles() {
                                                                     value={
                                                                         status.nama
                                                                     }
-                                                                    className="text-xs"
+                                                                    className="text-xs max-w-full break-words whitespace-normal"
                                                                 />
                                                             )
                                                         )}

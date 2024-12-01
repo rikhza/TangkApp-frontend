@@ -287,6 +287,7 @@ export function BerkasAlihMedia() {
                         NIK: user.NIK,
                         namaUser: user.nama,
                         role: roleNow,
+                        kategoriBerkas: 'alih-media',
                     },
                     {
                         headers: {
@@ -684,6 +685,7 @@ export function BerkasAlihMedia() {
                                     idPetugasUkur,
                                     namaPetugasUkur,
                                     statusBayarPNBP,
+                                    kategoriBerkas: 'alih-media',
                                 },
                                 {
                                     headers: {

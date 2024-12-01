@@ -39,7 +39,6 @@ const DetailModal = ({
 
     // Helper function to render fields
     const renderField = (label, value) => {
-        // Check if value is a MongoDB Decimal128 (or similar object)
         if (value && value.$numberDecimal) {
             value = value.$numberDecimal.toString() // Convert to string
         }
@@ -62,22 +61,46 @@ const DetailModal = ({
     const qrCodeRef = useRef(null)
 
     // Fungsi untuk mencetak QR Code
-
     const handlePrintQRCode = () => {
-        const printWindow = window.open('', '_blank')
+        if (qrCodeRef.current) {
+            const printWindow = window.open('', '_blank')
 
-        if (printWindow) {
-            printWindow.document.write(
-                `<html><head><title>https://tangkapp.id/dashboard/berkas/${berkas._id}</title></head><body>`
-            )
-            printWindow.document.write('<div style="text-align:center;">')
-            printWindow.document.write(qrCodeRef.current.innerHTML)
-            printWindow.document.write(
-                `<h2>${berkas.noBerkas}/${berkas.tahunBerkas}</h2>`
-            )
-            printWindow.document.write('</div></body></html>')
-            printWindow.document.close()
-            printWindow.print()
+            if (printWindow) {
+                // Menulis HTML untuk print window
+                printWindow.document.write(
+                    '<html><head><title>Print QR Code</title>'
+                )
+                printWindow.document.write('<style>')
+                printWindow.document.write(`
+                    body {
+                        font-family: Arial, sans-serif;
+                        text-align: center;
+                    }
+                    .qr-container {
+                        display: inline-block;
+                        padding: 20px;
+                        border: 1px solid #ddd;
+                        background-color: #fff;
+                    }
+                    img {
+                        max-width: 100%;
+                        height: auto;
+                    }
+                `)
+                printWindow.document.write('</style></head><body>')
+
+                // Menulis QR Code ke dalam print window
+                printWindow.document.write('<div class="qr-container">')
+                printWindow.document.write(qrCodeRef.current.innerHTML) // Menyalin isi QR Code
+                printWindow.document.write(`<h2>${id}</h2>`) // Menambahkan ID atau informasi lain
+                printWindow.document.write('</div>')
+
+                printWindow.document.write('</body></html>')
+                printWindow.document.close()
+
+                // Menunggu sampai konten siap dan kemudian mencetaknya
+                printWindow.print()
+            }
         }
     }
 
@@ -154,7 +177,6 @@ const DetailModal = ({
         <Dialog open={true} handler={onClose}>
             <DialogHeader className="text-2xl font-bold border-b pb-2 relative">
                 Detail Berkas
-                {/* Tombol Tutup */}
                 <button
                     onClick={onClose}
                     className="absolute top-2 right-2 p-1 text-gray-600 hover:text-gray-900"
@@ -176,9 +198,7 @@ const DetailModal = ({
                 </button>
             </DialogHeader>
             <DialogBody divider className="overflow-y-auto max-h-[70vh]">
-                {/* Informasi Berkas */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    {/* Kolom Kiri */}
                     <div className="border-r pr-4">
                         {renderField(
                             'Tanggal Terima',
@@ -188,7 +208,6 @@ const DetailModal = ({
                             'No Berkas',
                             `${berkas.noBerkas}/${berkas.tahunBerkas}`
                         )}
-
                         {renderField('Nama Pemohon', berkas.namaPemohon)}
                         {berkas.PIC?.map((x, y) => (
                             <div key={y}>
@@ -196,23 +215,19 @@ const DetailModal = ({
                                 {renderField(`Kontak Kuasa`, x.kontakPIC)}
                             </div>
                         ))}
-                        {/* Alas Hak */}
                         {renderField(
                             'Alas Hak',
                             berkas.noHak
                                 ? `${berkas.JenisHak} - ${berkas.noHak} / ${berkas.namaDesa} - ${berkas.namaKecamatan}`
                                 : `${berkas.JenisHak} / ${berkas.namaDesa} - ${berkas.namaKecamatan}`
                         )}
-
                         {renderField('Jumlah Bidang', berkas.jumlahBidang)}
                         {renderField('Luas', berkas.luas)}
-
                         {renderField(
                             'Tanggal Entri',
                             new Date(berkas.dateIn).toLocaleDateString()
                         )}
                     </div>
-                    {/* Kolom Kanan */}
                     <div>
                         {renderField(
                             'Status Perjalanan',
@@ -239,8 +254,8 @@ const DetailModal = ({
                 </div>
 
                 <div className="mt-6 border-t pt-4">
-                    <div ref={qrCodeRef}>
-                        <GenerateQRCode id={berkas._id} />
+                    <div>
+                        <GenerateQRCode id={berkas._id} ref={qrCodeRef} />
                     </div>
                     <Button
                         color="blue"
@@ -251,7 +266,7 @@ const DetailModal = ({
                         Print Barcode
                     </Button>
                 </div>
-                {/* Timeline */}
+
                 <div className="mt-6 border-t pt-4">
                     <Typography
                         variant="h6"
@@ -270,8 +285,8 @@ const DetailModal = ({
                             color="blue"
                             onClick={() => {
                                 onClose()
-                                setSelectedBerkas(berkas) // Set berkas yang dipilih
-                                setShowUpdatePopup(true) // Tampilkan popup
+                                setSelectedBerkas(berkas)
+                                setShowUpdatePopup(true)
                             }}
                         >
                             <PencilIcon className="h-5 w-5" />
@@ -279,7 +294,7 @@ const DetailModal = ({
                         <IconButton
                             variant="text"
                             color="red"
-                            onClick={() => handleDeleteBerkas(berkas._id)} // Panggil fungsi hapus
+                            onClick={() => handleDeleteBerkas(berkas._id)}
                         >
                             <TrashIcon className="h-5 w-5" />
                         </IconButton>
@@ -312,7 +327,7 @@ const DetailModal = ({
                                 variant="gradient"
                                 color="red"
                                 size="sm"
-                                onClick={() => handleTerhenti(berkas._id)} // Panggil handleTerhenti
+                                onClick={() => handleTerhenti(berkas._id)}
                             >
                                 Terhenti
                             </Button>
