@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import QRCodeStyling from 'qr-code-styling'
 
-const GenerateQRCode = ({ id }) => {
+const GenerateQRCode = ({ id, pageType }) => {
     const svgRef = useRef(null)
     const [isClient, setIsClient] = useState(false)
 
@@ -11,6 +11,16 @@ const GenerateQRCode = ({ id }) => {
 
         // Only generate QR code if we are on the client
         if (isClient) {
+            // Default the data URL to a generic QR code, then update based on pageType
+            let qrData = ''
+            if (pageType === 'berkasRutin') {
+                qrData = `https://tangkapp.id/dashboard/berkas/berkas-rutin/${id}`
+            } else if (pageType === 'berkasAlihMedia') {
+                qrData = `https://tangkapp.id/dashboard/berkas/berkas-alih-media/${id}`
+            } else {
+                qrData = `https://tangkapp.id/dashboard/berkas/${id}` // Default to generic if no match
+            }
+
             const qrCode = new QRCodeStyling({
                 width: 256, // Size of the QR Code
                 height: 256, // Size of the QR Code
@@ -67,7 +77,7 @@ const GenerateQRCode = ({ id }) => {
                 }
             }
         }
-    }, [id, isClient]) // Re-run the effect when `id` changes
+    }, [id, pageType, isClient]) // Re-run the effect when `id` or `pageType` changes
 
     if (!isClient) {
         return <div>Loading...</div> // Optionally, you can render a loading state for SSR
