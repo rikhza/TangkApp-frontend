@@ -118,7 +118,7 @@ const PopUpUpdateRole = ({ data, onClose, onUpdateSuccess }) => {
                     onChange={(e) =>
                         setFormData({
                             ...formData,
-                            nama: e.target.value.toUpperCase(),
+                            nama: e.target.value,
                         })
                     }
                     style={{

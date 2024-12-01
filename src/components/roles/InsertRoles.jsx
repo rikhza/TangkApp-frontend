@@ -113,7 +113,7 @@ const PopUpInsertRole = ({ onClose, onInsertSuccess }) => {
                     onChange={(e) =>
                         setFormData({
                             ...formData,
-                            nama: e.target.value.toUpperCase(),
+                            nama: e.target.value,
                         })
                     }
                     style={{

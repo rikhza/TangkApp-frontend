@@ -269,7 +269,6 @@ const DetailModal = ({
                     </Typography>
                     {renderTimeline()}
                 </div>
-                {`${isMatchingRole}`} asd {`${accessRole == undefined}`}
             </DialogBody>
             <DialogFooter className={accessRole ? '' : 'show-on-mobile'}>
                 {(roleNow === 'Admin' ||
