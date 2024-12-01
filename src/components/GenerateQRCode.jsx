@@ -15,7 +15,7 @@ const GenerateQRCode = ({ id }) => {
                 width: 256, // Size of the QR Code
                 height: 256, // Size of the QR Code
                 type: 'svg', // Specify SVG type for better quality
-                data: `https://tangkapp.id/dashboard/berkas/${id}`, // Data to encode
+                data: `https://tangkapp.id/dashboard/berkas/detail/${id}`, // Data to encode
                 image: '/img/Logo.png', // Path to logo image
                 imageOptions: {
                     crossOrigin: 'anonymous', // Handle cross-origin requests
