@@ -33,9 +33,18 @@ const DetailModal = ({
     setShowUpdatePopup,
     handleDeleteBerkas,
     handleTerhenti,
+    accessRole,
 }) => {
     const [controller] = useMaterialTailwindController()
     const { roleNow, token, user } = controller
+    let matchingRole = null
+    if (accessRole) {
+        const lastStatus = berkas.status[berkas.status.length - 1]
+        const statusName = lastStatus.name
+        matchingRole = accessRole.accessStatus.find(
+            (roleItem) => roleItem.nama === statusName
+        )
+    }
 
     // Helper function to render fields
     const renderField = (label, value) => {
@@ -250,6 +259,12 @@ const DetailModal = ({
                             'Status Bayar PNBP',
                             berkas.statusBayarPNBP ? 'Sudah' : 'Belum'
                         )}
+                        {renderField(
+                            'Kategori Berkas',
+                            berkas.kategoriBerkas === 'rutin'
+                                ? 'Rutin'
+                                : 'Alih-Media'
+                        )}
                     </div>
                 </div>
 
@@ -277,7 +292,7 @@ const DetailModal = ({
                     {renderTimeline()}
                 </div>
             </DialogBody>
-            <DialogFooter className="show-on-mobile">
+            <DialogFooter className={accessRole ? '' : `show-on-mobile`}>
                 {roleNow === 'Admin' || roleNow === 'PelaksanaEntri' ? (
                     <>
                         <IconButton
@@ -300,39 +315,44 @@ const DetailModal = ({
                         </IconButton>
                     </>
                 ) : (
-                    <>
-                        <Button
-                            variant="gradient"
-                            color="green"
-                            size="sm"
-                            onClick={() =>
-                                handleSelesai(
-                                    berkas._id,
-                                    berkas.status[berkas.status?.length - 1]
-                                        ?.statusDetail[
-                                        berkas.status[berkas.status?.length - 1]
-                                            ?.statusDetail?.length - 1
-                                    ]?.nama,
-                                    berkas
-                                )
-                            }
-                        >
-                            Selesai
-                        </Button>
-                        {berkas.status[berkas.status?.length - 1]?.statusDetail[
-                            berkas.status[berkas.status?.length - 1]
-                                ?.statusDetail?.length - 1
-                        ]?.nama !== 'Terhenti' && (
+                    matchingRole ||
+                    (accessRole == null && (
+                        <>
                             <Button
                                 variant="gradient"
-                                color="red"
+                                color="green"
                                 size="sm"
-                                onClick={() => handleTerhenti(berkas._id)}
+                                onClick={() =>
+                                    handleSelesai(
+                                        berkas._id,
+                                        berkas.status[berkas.status?.length - 1]
+                                            ?.statusDetail[
+                                            berkas.status[
+                                                berkas.status?.length - 1
+                                            ]?.statusDetail?.length - 1
+                                        ]?.nama,
+                                        berkas
+                                    )
+                                }
                             >
-                                Terhenti
+                                Selesai
                             </Button>
-                        )}
-                    </>
+                            {berkas.status[berkas.status?.length - 1]
+                                ?.statusDetail[
+                                berkas.status[berkas.status?.length - 1]
+                                    ?.statusDetail?.length - 1
+                            ]?.nama !== 'Terhenti' && (
+                                <Button
+                                    variant="gradient"
+                                    color="red"
+                                    size="sm"
+                                    onClick={() => handleTerhenti(berkas._id)}
+                                >
+                                    Terhenti
+                                </Button>
+                            )}
+                        </>
+                    ))
                 )}
             </DialogFooter>
         </Dialog>
