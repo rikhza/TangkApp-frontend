@@ -1,4 +1,5 @@
 import React, { useRef } from 'react'
+import { useLocation } from 'react-router-dom'
 import {
     Dialog,
     DialogHeader,
@@ -50,6 +51,13 @@ const DetailModal = ({
             console.log(isMatchingRole, accessRole === undefined)
         }
     }
+
+    const location = useLocation()
+    const pageType = location.pathname.includes('berkas-rutin')
+        ? 'berkasRutin'
+        : location.pathname.includes('berkas-alih-media')
+        ? 'berkasAlihMedia'
+        : 'default'
 
     // Helper function to render fields
     const renderField = (label, value) => {
@@ -253,7 +261,7 @@ const DetailModal = ({
                 </div>
                 <div className="mt-6 border-t pt-4">
                     <div ref={qrCodeRef}>
-                        <GenerateQRCode id={berkas._id} />
+                        <GenerateQRCode id={berkas._id} pageType={pageType} />
                     </div>
                     <Button
                         color="blue"
