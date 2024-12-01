@@ -47,7 +47,7 @@ const DetailModal = ({
                 (roleItem) => roleItem.nama === statusName
             )
             isMatchingRole = Boolean(matchingRole)
-            console.log(isMatchingRole, accessRole)
+            console.log(isMatchingRole, accessRole === undefined)
         }
     }
 
@@ -161,6 +161,10 @@ const DetailModal = ({
             ))}
         </Timeline>
     )
+    const lastStatus = berkas.status?.[berkas.status.length - 1]
+    const lastStatusDetail =
+        lastStatus?.statusDetail?.[lastStatus.statusDetail.length - 1]
+    const statusName = lastStatusDetail?.nama
 
     return (
         <Dialog open={true} handler={onClose}>
@@ -278,7 +282,7 @@ const DetailModal = ({
                             variant="text"
                             color="blue"
                             onClick={() => {
-                                onClose()
+                                // onClose()
                                 setSelectedBerkas(berkas)
                                 setShowUpdatePopup(true)
                             }}
@@ -295,7 +299,15 @@ const DetailModal = ({
                     </>
                 )}
 
-                {(isMatchingRole || accessRole === undefined) && (
+                {((roleNow !== 'Petugas Administrasi - Entri Data' &&
+                    roleNow !== 'Admin' &&
+                    isMatchingRole &&
+                    accessRole &&
+                    statusName !== 'Selesai') ||
+                    (roleNow !== 'Petugas Administrasi - Entri Data' &&
+                        roleNow !== 'Admin' &&
+                        accessRole === undefined &&
+                        statusName !== 'Selesai')) && (
                     <div style={{ display: 'flex', gap: '10px' }}>
                         <Button
                             variant="gradient"

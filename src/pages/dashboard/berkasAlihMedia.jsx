@@ -131,6 +131,11 @@ export function BerkasAlihMedia() {
     const [loadingTerhenti, setLoadingTerhenti] = useState(false)
 
     const renderActionButtons = (berkas) => {
+        const lastStatus = berkas.status?.[berkas.status.length - 1]
+        const lastStatusDetail =
+            lastStatus?.statusDetail?.[lastStatus.statusDetail.length - 1]
+        const statusName = lastStatusDetail?.nama
+
         if (
             roleNow === 'Admin' ||
             roleNow === 'Petugas Administrasi - Entri Data'
@@ -156,7 +161,7 @@ export function BerkasAlihMedia() {
                     </IconButton>
                 </>
             )
-        } else {
+        } else if (statusName !== 'Selesai') {
             return (
                 <>
                     {roleNow === 'Petugas Administrasi - Surat Tugas' && (
@@ -652,8 +657,8 @@ export function BerkasAlihMedia() {
                 <DetailModal
                     setSelectedBerkas={setSelectedBerkas}
                     setShowUpdatePopup={setShowUpdatePopup}
-                    handleTerhenti={handleTerhenti}
                     handleDeleteBerkas={handleDeleteBerkas}
+                    handleTerhenti={handleTerhenti}
                     handleSelesai={handleSelesai}
                     berkas={selectedBerkas}
                     onClose={() => {
