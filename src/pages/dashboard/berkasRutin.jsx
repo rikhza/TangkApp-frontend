@@ -131,6 +131,11 @@ export function BerkasRutin() {
     const [loadingTerhenti, setLoadingTerhenti] = useState(false)
 
     const renderActionButtons = (berkas) => {
+        const lastStatus = berkas.status?.[berkas.status.length - 1]
+        const lastStatusDetail =
+            lastStatus?.statusDetail?.[lastStatus.statusDetail.length - 1]
+        const statusName = lastStatusDetail?.nama
+
         if (
             roleNow === 'Admin' ||
             roleNow === 'Petugas Administrasi - Entri Data'
@@ -156,7 +161,7 @@ export function BerkasRutin() {
                     </IconButton>
                 </>
             )
-        } else {
+        } else if (statusName !== 'Selesai') {
             return (
                 <>
                     {roleNow === 'Petugas Administrasi - Surat Tugas' && (
