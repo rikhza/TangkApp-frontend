@@ -37,13 +37,16 @@ const DetailModal = ({
 }) => {
     const [controller] = useMaterialTailwindController()
     const { roleNow, token, user } = controller
-    let matchingRole = null
-    if (accessRole) {
+    let isMatchingRole = false
+
+    if (JSON.stringify(isMatchingRole, null, 2) && !isMatchingRole) {
         const lastStatus = berkas.status[berkas.status.length - 1]
         const statusName = lastStatus.name
-        matchingRole = accessRole.accessStatus.find(
+        const matchingRole = accessRole.accessStatus.find(
             (roleItem) => roleItem.nama === statusName
         )
+        isMatchingRole = Boolean(matchingRole)
+        console.log(isMatchingRole, accessRole)
     }
 
     // Helper function to render fields
@@ -267,7 +270,6 @@ const DetailModal = ({
                         )}
                     </div>
                 </div>
-
                 <div className="mt-6 border-t pt-4">
                     <div>
                         <GenerateQRCode id={berkas._id} ref={qrCodeRef} />
@@ -281,7 +283,6 @@ const DetailModal = ({
                         Print Barcode
                     </Button>
                 </div>
-
                 <div className="mt-6 border-t pt-4">
                     <Typography
                         variant="h6"
@@ -291,9 +292,11 @@ const DetailModal = ({
                     </Typography>
                     {renderTimeline()}
                 </div>
+                {`${isMatchingRole}`} asd {`${accessRole == undefined}`}
             </DialogBody>
-            <DialogFooter className={accessRole ? '' : `show-on-mobile`}>
-                {roleNow === 'Admin' || roleNow === 'PelaksanaEntri' ? (
+            <DialogFooter className={accessRole ? '' : 'show-on-mobile'}>
+                {(roleNow === 'Admin' ||
+                    roleNow === 'Petugas Administrasi - Entri Data') && (
                     <>
                         <IconButton
                             variant="text"
@@ -314,45 +317,42 @@ const DetailModal = ({
                             <TrashIcon className="h-5 w-5" />
                         </IconButton>
                     </>
-                ) : (
-                    matchingRole ||
-                    (accessRole == null && (
-                        <>
+                )}
+
+                {(isMatchingRole || accessRole === undefined) && (
+                    <div style={{ display: 'flex', gap: '10px' }}>
+                        <Button
+                            variant="gradient"
+                            color="green"
+                            size="sm"
+                            onClick={() =>
+                                handleSelesai(
+                                    berkas._id,
+                                    berkas.status[berkas.status?.length - 1]
+                                        ?.statusDetail[
+                                        berkas.status[berkas.status?.length - 1]
+                                            ?.statusDetail?.length - 1
+                                    ]?.nama,
+                                    berkas
+                                )
+                            }
+                        >
+                            Selesai
+                        </Button>
+                        {berkas.status[berkas.status?.length - 1]?.statusDetail[
+                            berkas.status[berkas.status?.length - 1]
+                                ?.statusDetail?.length - 1
+                        ]?.nama !== 'Terhenti' && (
                             <Button
                                 variant="gradient"
-                                color="green"
+                                color="red"
                                 size="sm"
-                                onClick={() =>
-                                    handleSelesai(
-                                        berkas._id,
-                                        berkas.status[berkas.status?.length - 1]
-                                            ?.statusDetail[
-                                            berkas.status[
-                                                berkas.status?.length - 1
-                                            ]?.statusDetail?.length - 1
-                                        ]?.nama,
-                                        berkas
-                                    )
-                                }
+                                onClick={() => handleTerhenti(berkas._id)}
                             >
-                                Selesai
+                                Terhenti
                             </Button>
-                            {berkas.status[berkas.status?.length - 1]
-                                ?.statusDetail[
-                                berkas.status[berkas.status?.length - 1]
-                                    ?.statusDetail?.length - 1
-                            ]?.nama !== 'Terhenti' && (
-                                <Button
-                                    variant="gradient"
-                                    color="red"
-                                    size="sm"
-                                    onClick={() => handleTerhenti(berkas._id)}
-                                >
-                                    Terhenti
-                                </Button>
-                            )}
-                        </>
-                    ))
+                        )}
+                    </div>
                 )}
             </DialogFooter>
         </Dialog>
