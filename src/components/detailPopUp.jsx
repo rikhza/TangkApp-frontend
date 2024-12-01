@@ -39,14 +39,16 @@ const DetailModal = ({
     const { roleNow, token, user } = controller
     let isMatchingRole = false
 
-    if (JSON.stringify(isMatchingRole, null, 2) && !isMatchingRole) {
-        const lastStatus = berkas.status[berkas.status.length - 1]
-        const statusName = lastStatus.name
-        const matchingRole = accessRole.accessStatus.find(
-            (roleItem) => roleItem.nama === statusName
-        )
-        isMatchingRole = Boolean(matchingRole)
-        console.log(isMatchingRole, accessRole)
+    if (accessRole) {
+        if (JSON.stringify(isMatchingRole, null, 2) && !isMatchingRole) {
+            const lastStatus = berkas.status[berkas.status.length - 1]
+            const statusName = lastStatus.name
+            const matchingRole = accessRole.accessStatus.find(
+                (roleItem) => roleItem.nama === statusName
+            )
+            isMatchingRole = Boolean(matchingRole)
+            console.log(isMatchingRole, accessRole)
+        }
     }
 
     // Helper function to render fields
