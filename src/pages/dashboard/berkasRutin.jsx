@@ -22,7 +22,7 @@ import PopUpUpdateBerkas from '@/components/PopUpUpdateBerkas'
 import FilterPopUp from '@/components/filterPopUp'
 import PopUpSelesai from '@/components/popupSelesaiSPJ'
 import ReactDOMServer from 'react-dom/server'
-import GenerateQRCode from '@/components/GenerateQRCode'
+import GenerateQRCode from '@/components/GenerateQRCodeBasic'
 
 export function BerkasRutin() {
     const [controller] = useMaterialTailwindController()
