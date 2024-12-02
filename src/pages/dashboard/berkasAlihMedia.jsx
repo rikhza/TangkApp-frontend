@@ -36,6 +36,7 @@ export function BerkasAlihMedia() {
     const [showDetail, setShowDetailPopUp] = useState(false)
     const [selectedBerkas, setSelectedBerkas] = useState(null) // State for selected berkas for detail modal
     const [isFilterOpen, setIsFilterOpen] = useState(false)
+    const [searchQuery, setSearchQuery] = useState('')
 
     const handlePrintQRCode = (response) => {
         const berkas = response.data
@@ -384,6 +385,18 @@ export function BerkasAlihMedia() {
         }
     }
 
+    const filteredBerkasData = berkasData.filter(
+        (berkas) =>
+            berkas.noBerkas.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            berkas.namaPemohon
+                .toLowerCase()
+                .includes(searchQuery.toLowerCase()) ||
+            berkas.namaKegiatan
+                .toLowerCase()
+                .includes(searchQuery.toLowerCase()) ||
+            berkas.namaDesa.toLowerCase().includes(searchQuery.toLowerCase())
+    )
+
     return (
         <div className="mt-12 mb-8 flex flex-col gap-12">
             <Card>
@@ -429,6 +442,13 @@ export function BerkasAlihMedia() {
                 </CardHeader>
 
                 <CardBody className="px-0 pt-0 pb-2">
+                    <input
+                        type="text"
+                        placeholder="Search..."
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                        className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-800" // Change text color here
+                    />
                     {loading ? (
                         <Typography className="text-center">
                             Loading...
@@ -477,9 +497,10 @@ export function BerkasAlihMedia() {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {berkasData.map((berkas, key) => {
+                                    {filteredBerkasData.map((berkas, key) => {
                                         const className = `py-3 px-5 ${
-                                            key === berkasData.length - 1
+                                            key ===
+                                            filteredBerkasData.length - 1
                                                 ? ''
                                                 : 'border-b border-blue-gray-50'
                                         }`
