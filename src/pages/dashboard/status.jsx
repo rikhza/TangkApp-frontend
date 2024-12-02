@@ -34,9 +34,11 @@ export function Status() {
                 const response = await axios.get('status', {
                     headers: { Authorization: `Bearer ${token}` },
                 })
-                const sortedData = response.data.sort(
-                    (a, b) => a.indexStatus - b.indexStatus
-                )
+                const sortedData = response.data.sort((a, b) => {
+                    if (a.kategoriBerkas < b.kategoriBerkas) return -1
+                    if (a.kategoriBerkas > b.kategoriBerkas) return 1
+                    return a.indexStatus - b.indexStatus // Sort by indexStatus if kategoriBerkas is the same
+                })
                 setStatusData(sortedData || [])
             } catch (error) {
                 setError('Gagal memuat data status.')

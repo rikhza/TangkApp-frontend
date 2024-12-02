@@ -175,7 +175,7 @@ export function Roles() {
                                 <input
                                     type="text"
                                     className="w-full px-4 py-2 border rounded-md"
-                                    placeholder="Search by Role Name"
+                                    placeholder="Cari Role"
                                     value={searchQuery}
                                     onChange={(e) =>
                                         setSearchQuery(e.target.value)
