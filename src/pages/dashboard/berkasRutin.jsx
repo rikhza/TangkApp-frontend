@@ -554,7 +554,51 @@ export function BerkasRutin() {
                                                                     ]?.nama ===
                                                                     'Berjalan'
                                                                         ? 'bg-blue-500 text-white'
-                                                                        : 'bg-red-500 text-white'
+                                                                        : berkas
+                                                                              .status[
+                                                                              berkas
+                                                                                  .status
+                                                                                  .length -
+                                                                                  1
+                                                                          ]
+                                                                              ?.statusDetail?.[
+                                                                              berkas
+                                                                                  .status[
+                                                                                  berkas
+                                                                                      .status
+                                                                                      .length -
+                                                                                      1
+                                                                              ]
+                                                                                  ?.statusDetail
+                                                                                  ?.length -
+                                                                                  1
+                                                                          ]
+                                                                              ?.nama ===
+                                                                          'Selesai'
+                                                                        ? 'bg-green-500 text-white'
+                                                                        : berkas
+                                                                              .status[
+                                                                              berkas
+                                                                                  .status
+                                                                                  .length -
+                                                                                  1
+                                                                          ]
+                                                                              ?.statusDetail?.[
+                                                                              berkas
+                                                                                  .status[
+                                                                                  berkas
+                                                                                      .status
+                                                                                      .length -
+                                                                                      1
+                                                                              ]
+                                                                                  ?.statusDetail
+                                                                                  ?.length -
+                                                                                  1
+                                                                          ]
+                                                                              ?.nama ===
+                                                                          'Terhenti'
+                                                                        ? 'bg-red-500 text-white'
+                                                                        : 'bg-gray-500 text-white'
                                                                 }`}
                                                             >
                                                                 {

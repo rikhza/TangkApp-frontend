@@ -16,13 +16,13 @@ import {
 import { useMaterialTailwindController } from '@/context'
 import { useEffect, useState } from 'react'
 import axios from '../../api/apiTangkApp' // Import Axios instance
-import PopUpInsertBerkas from '@/components/InsertPopupAlihMedia'
+import PopUpInsertBerkas from '@/components/InsertPopup'
 import DetailModal from '@/components/detailPopUp' // Import the detail modal
 import PopUpUpdateBerkas from '@/components/PopUpUpdateBerkas'
 import FilterPopUp from '@/components/filterPopUp'
 import PopUpSelesai from '@/components/popupSelesaiSPJ'
 import ReactDOMServer from 'react-dom/server'
-import GenerateQRCode from '@/components/GenerateQRCodeBasic'
+import GenerateQRCode from '@/components/GenerateQRCode'
 
 export function BerkasAlihMedia() {
     const [controller] = useMaterialTailwindController()
@@ -131,11 +131,6 @@ export function BerkasAlihMedia() {
     const [loadingTerhenti, setLoadingTerhenti] = useState(false)
 
     const renderActionButtons = (berkas) => {
-        const lastStatus = berkas.status?.[berkas.status.length - 1]
-        const lastStatusDetail =
-            lastStatus?.statusDetail?.[lastStatus.statusDetail.length - 1]
-        const statusName = lastStatusDetail?.nama
-
         if (
             roleNow === 'Admin' ||
             roleNow === 'Petugas Administrasi - Entri Data'
@@ -161,7 +156,7 @@ export function BerkasAlihMedia() {
                     </IconButton>
                 </>
             )
-        } else if (statusName !== 'Selesai') {
+        } else {
             return (
                 <>
                     {roleNow === 'Petugas Administrasi - Surat Tugas' && (
@@ -554,7 +549,51 @@ export function BerkasAlihMedia() {
                                                                     ]?.nama ===
                                                                     'Berjalan'
                                                                         ? 'bg-blue-500 text-white'
-                                                                        : 'bg-red-500 text-white'
+                                                                        : berkas
+                                                                              .status[
+                                                                              berkas
+                                                                                  .status
+                                                                                  .length -
+                                                                                  1
+                                                                          ]
+                                                                              ?.statusDetail?.[
+                                                                              berkas
+                                                                                  .status[
+                                                                                  berkas
+                                                                                      .status
+                                                                                      .length -
+                                                                                      1
+                                                                              ]
+                                                                                  ?.statusDetail
+                                                                                  ?.length -
+                                                                                  1
+                                                                          ]
+                                                                              ?.nama ===
+                                                                          'Selesai'
+                                                                        ? 'bg-green-500 text-white'
+                                                                        : berkas
+                                                                              .status[
+                                                                              berkas
+                                                                                  .status
+                                                                                  .length -
+                                                                                  1
+                                                                          ]
+                                                                              ?.statusDetail?.[
+                                                                              berkas
+                                                                                  .status[
+                                                                                  berkas
+                                                                                      .status
+                                                                                      .length -
+                                                                                      1
+                                                                              ]
+                                                                                  ?.statusDetail
+                                                                                  ?.length -
+                                                                                  1
+                                                                          ]
+                                                                              ?.nama ===
+                                                                          'Terhenti'
+                                                                        ? 'bg-red-500 text-white'
+                                                                        : 'bg-gray-500 text-white'
                                                                 }`}
                                                             >
                                                                 {
@@ -657,8 +696,8 @@ export function BerkasAlihMedia() {
                 <DetailModal
                     setSelectedBerkas={setSelectedBerkas}
                     setShowUpdatePopup={setShowUpdatePopup}
-                    handleDeleteBerkas={handleDeleteBerkas}
                     handleTerhenti={handleTerhenti}
+                    handleDeleteBerkas={handleDeleteBerkas}
                     handleSelesai={handleSelesai}
                     berkas={selectedBerkas}
                     onClose={() => {
